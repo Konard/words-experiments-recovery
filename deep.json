@@ -1,0 +1,317 @@
+{
+  "package": {
+    "name": "@deep-foundation/words-experiment",
+    "version": "0.0.16"
+  },
+  "data": [
+    {
+      "package": {
+        "dependencyId": 0,
+        "containValue": "TSX"
+      },
+      "id": 1
+    },
+    {
+      "package": {
+        "dependencyId": 1,
+        "containValue": "HandleUpdate"
+      },
+      "id": 2
+    },
+    {
+      "package": {
+        "dependencyId": 2,
+        "containValue": "Post"
+      },
+      "id": 3
+    },
+    {
+      "package": {
+        "dependencyId": 3,
+        "containValue": "handler"
+      },
+      "id": 4
+    },
+    {
+      "package": {
+        "dependencyId": 1,
+        "containValue": "Query"
+      },
+      "id": 5
+    },
+    {
+      "package": {
+        "dependencyId": 2,
+        "containValue": "Address"
+      },
+      "id": 6
+    },
+    {
+      "package": {
+        "dependencyId": 1,
+        "containValue": "Handler"
+      },
+      "id": 7
+    },
+    {
+      "package": {
+        "dependencyId": 1,
+        "containValue": "clientSupportsJs"
+      },
+      "id": 8
+    },
+    {
+      "package": {
+        "dependencyId": 1,
+        "containValue": "SyncTextFile"
+      },
+      "id": 9
+    },
+    {
+      "package": {
+        "dependencyId": 1,
+        "containValue": "plv8SupportsJs"
+      },
+      "id": 10
+    },
+    {
+      "package": {
+        "dependencyId": 3,
+        "containValue": "Count"
+      },
+      "id": 11
+    },
+    {
+      "package": {
+        "dependencyId": 1,
+        "containValue": "Type"
+      },
+      "id": 12
+    },
+    {
+      "package": {
+        "dependencyId": 1,
+        "containValue": "HandleClient"
+      },
+      "id": 13
+    },
+    {
+      "package": {
+        "dependencyId": 1,
+        "containValue": "Value"
+      },
+      "id": 14
+    },
+    {
+      "package": {
+        "dependencyId": 1,
+        "containValue": "Object"
+      },
+      "id": 15
+    },
+    {
+      "package": {
+        "dependencyId": 1,
+        "containValue": "Number"
+      },
+      "id": 16
+    },
+    {
+      "id": "1336",
+      "type": 6,
+      "value": {
+        "value": "http://news2.ru/rss.php?order=new"
+      }
+    },
+    {
+      "id": "2328",
+      "type": 7,
+      "from": 10,
+      "to": "CloudMinMaxSyncHandler"
+    },
+    {
+      "id": "2330",
+      "type": 2,
+      "from": "Max",
+      "to": "2328"
+    },
+    {
+      "id": "2332",
+      "type": 2,
+      "from": "Min",
+      "to": "2328"
+    },
+    {
+      "id": "2334",
+      "type": 7,
+      "from": 10,
+      "to": "CloudSelectorSyncHandler"
+    },
+    {
+      "id": "2336",
+      "type": 2,
+      "from": 11,
+      "to": "2334"
+    },
+    {
+      "id": "2340",
+      "type": "Cloud",
+      "value": {
+        "value": {}
+      }
+    },
+    {
+      "id": "3023",
+      "type": "CloudAddress",
+      "from": "2340",
+      "to": "demoAddress"
+    },
+    {
+      "id": "4939",
+      "type": 14,
+      "from": "Cloud",
+      "to": 15
+    },
+    {
+      "id": "4941",
+      "type": 14,
+      "from": "Max",
+      "to": 16
+    },
+    {
+      "id": "4943",
+      "type": 14,
+      "from": "Min",
+      "to": 16
+    },
+    {
+      "id": "366784",
+      "type": 7,
+      "from": 8,
+      "to": "BardsClientHandler"
+    },
+    {
+      "id": "367370",
+      "type": 5,
+      "value": {
+        "value": {
+          "from": {
+            "from_id": {
+              "_id": [
+                "@deep-foundation/words-experiment",
+                "demoAddress"
+              ]
+            }
+          },
+          "type_id": {
+            "_id": [
+              "@deep-foundation/splitting-text-into-words-alt",
+              "Count"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "367384",
+      "type": 2,
+      "from": 3,
+      "to": 4
+    },
+    {
+      "id": "AddressesClientHandler",
+      "type": 1,
+      "value": {
+        "value": "async ({ deep, require }) => {\n  const React = require('react');\n  const { useRef, useEffect, useState, useCallback } = React;\n  const { Input, SimpleGrid, Box } = require('@chakra-ui/react');\n  const WordCloud = require('react-d3-cloud');\n  const { useLocalStore } = require('@deep-foundation/store/local');\n  const ResizeDetector = require('react-resize-detector');\n  const _ = require('lodash');\n  const { useSpaceId } = require('@deep-foundation/deepcase');\n  // const {\n  //   BarChart,\n  //   Bar,\n  //   Brush,\n  //   ReferenceLine,\n  //   XAxis,\n  //   YAxis,\n  //   CartesianGrid,\n  //   Tooltip,\n  //   Legend,\n  //   ResponsiveContainer,\n  // } = await deep.import('recharts');\n\n  const Min = await deep.id('@deep-foundation/words-experiment', 'Min');\n  const Max = await deep.id('@deep-foundation/words-experiment', 'Max');\n  const Word = await deep.id('@deep-foundation/splitting-text-into-words-alt', 'Word');\n  const Count = await deep.id('@deep-foundation/splitting-text-into-words-alt', 'Count');\n  const Address = await deep.id('@deep-foundation/rss-to-deep', 'Address');\n  const Contain = await deep.id('@deep-foundation/core', 'Contain');\n  const rssTree = await deep.id('@deep-foundation/rss-to-deep', 'rssTree');\n\n  const Content = React.memo(({ style, link }) => {\n    const [selectedWords, setSelectedWords] = useLocalStore('wcsw', []);\n    const [selectedAddresses, setSelectedAddresses] = useLocalStore('wcsa', []);\n    const { data: addresses } = deep.useDeepSubscription({\n      type_id: Address,\n      in: {\n        type_id: Contain,\n        from: {\n          out: {\n            type_id: Contain,\n            to_id: link.id,\n          },\n        },\n      },\n    });\n    return <>\n      <ResizeDetector\n        handleWidth handleHeight\n        onResize={(width, height) => setSize({ width, height })}\n      >\n        <div style={{ ...style, position: 'relative', }}>\n          <div>\n            {addresses.map((a => (<div>{a.id} {a.value}</div>)))}\n          </div>\n        </div>\n      </ResizeDetector>\n    </>;\n  }, (prev, next) => _.isEqual(prev.link.value, next.link.value));\n  return ({ style, link }) => {\n    return <Content link={link} style={{ width: 500, height: 500, ...style }}/>;\n  };\n}"
+      }
+    },
+    {
+      "id": "demoAddress",
+      "type": 6,
+      "value": {
+        "value": "http://lenta.ru/rss"
+      }
+    },
+    {
+      "id": "BardsClientHandler",
+      "type": 1,
+      "value": {
+        "value": "async ({ deep, require }) => {\n  const React = require('react');\n  const { useRef, useEffect, useState, useCallback } = React;\n  // const { \n  //   Box,\n  //   Input,\n  //   Text, \n  //   Select\n  // } = require('@chakra-ui/react');\n  // const WordCloud = require('react-d3-cloud');\n  // const { useLocalStore } = require('@deep-foundation/store/local');\n  // const ResizeDetector = require('react-resize-detector');\n  // const _ = require('lodash');\n  // const { useSpaceId } = require('@deep-foundation/deepcase');\n  // const {\n  //   BarChart,\n  //   Bar,\n  //   Brush,\n  //   ReferenceLine,\n  //   XAxis,\n  //   YAxis,\n  //   CartesianGrid,\n  //   Tooltip,\n  //   Legend,\n  //   ResponsiveContainer,\n  // } = await deep.import('recharts');\n\n  // const Min = await deep.id('@deep-foundation/words-experiment', 'Min');\n  // const Max = await deep.id('@deep-foundation/words-experiment', 'Max');\n  // const Word = await deep.id('@deep-foundation/splitting-text-into-words-alt', 'Word');\n  // const Count = await deep.id('@deep-foundation/splitting-text-into-words-alt', 'Count');\n  // const Address = await deep.id('@deep-foundation/rss-to-deep', 'Address');\n  // const Contain = await deep.id('@deep-foundation/core', 'Contain');\n  // const rssTree = await deep.id('@deep-foundation/rss-to-deep', 'rssTree');\n\n\n  const Content = React.memo(({ style, link }) => {\n  //   const [selectedWords, setSelectedWords] = useLocalStore('wcsw', []);\n  //   const [selectedAddresses, setSelectedAddresses] = useLocalStore('wcsa', []);\n  //   // const [selectedWords, setSelectedWords] = useState([]);\n  //   const { data: [min] } = deep.useDeepSubscription({\n  //     type_id: Min, from_id: link.id,\n  //   });\n  //   const { data: [max] } = deep.useDeepSubscription({\n  //     type_id: Max, from_id: link.id,\n  //   });\n  //   const { data: addresses } = deep.useDeepSubscription({\n  //     type_id: Address,\n  //     in: {\n  //       type_id: Contain,\n  //       from: {\n  //         out: {\n  //           type_id: Contain,\n  //           to_id: link.id,\n  //         },\n  //       },\n  //     },\n  //   });\n  //   // const whereAddresses = selectedAddresses?.length ? {\n  //   //   from: { up: { tree_id: rssTree, parent_id: { _in: selectedAddresses } } },\n  //   // } : {};\n  //   // const { data: results } = deep.useDeepSubscription({\n  //   //   _or: [\n  //   //     {\n  //   //       type_id: Word,\n  //   //       in: {\n  //   //         type_id: Count,\n  //   //         number: { value: { _gte: 2 } },\n  //   //         ...whereAddresses,\n  //   //       },\n  //   //     },\n  //   //     {\n  //   //       type_id: Count,\n  //   //       number: { value: { _gte: 2 } },\n  //   //       ...whereAddresses,\n  //   //     },\n  //   //   ]\n  //   // });\n  //   // console.log(whereAddresses);\n  //   // const words = deep.useMinilinksSubscription({\n  //   //   type_id: Word,\n  //   // });\n  //   const data = React.useMemo(() => {\n  //     const wordIds = Object.keys((link?.value?.value || {}));\n  //     return wordIds.filter(wid => link?.value?.value[wid]?.total > 1).map(wid => ({\n  //       id: wid,\n  //       text: link?.value?.value[wid]?.word,\n  //       value: link?.value?.value[wid]?.total,\n  //     }));\n  //   }, [link]);\n  //   const onWordClick = useCallback((e, w) => setSelectedWords((selectedWords = []) => selectedWords.includes(w.id) ? selectedWords.filter(i => i ! === w.id) : [...selectedWords, w.id]), []);\n  //   const wordFontWeight = useCallback((w) => selectedWords.includes(w.id) ? 'bold' : 'normal', [selectedWords]);\n  //   const wordFill = useCallback((w) => selectedWords.includes(w.id) ? '#fff' : '#b6b6b6', [selectedWords]);\n  //   const wordRotate = useCallback((word) => word.value % 1, []);\n  //   console.log({ selectedWords, data });\n  //   const [size, setSize] = useState({ width: 0, height: 0 })\n\n  //   const _min = new Date(min?.value?.value || (new Date()).valueOf());\n  //   const _max = new Date(max?.value?.value || (new Date()).valueOf());\n  //   const __min = (new Date(_min.getTime() - _min.getTimezoneOffset() * 60000).toISOString()).slice(0, -1)\n  //   const __max = (new Date(_max.getTime() - _max.getTimezoneOffset() * 60000).toISOString()).slice(0, -1)\n\n  //   const [wordValue, setWordValue] = useState('год');\n  //   const [wordСount, setWordСount] = useState(10);\n  //   const sliceData = data.slice(0, wordСount);\n  //   const datasorting = sliceData.sort((a,b) => b.value - a.value);\n  //   console.log('datasorting', datasorting);\n  //   console.log('sliceData', sliceData);\n  //   console.log('wordСount', wordСount);\n  //   console.log('wordValue', wordValue);\n  //   console.log('width', size.width);\n\n  //   return <>\n  //     <ResizeDetector\n  //       handleWidth handleHeight\n  //       onResize={(width, height) => setSize({ width, height })}\n  //     >\n  //       <Box sx={{ p: '1rem', ...style, position: 'relative', background: 'backgroundModal' }}>\n  //         <Box display='grid' gridTemplateColumns='repeat(auto-fit, minmax(8rem, 1fr))' columnGap='0.5rem' rowGap='0.5rem' mb='2rem'>\n  //           <Input \n  //             placeholder='Количество слов'\n  //             value={wordСount}\n  //             type='number'\n  //             onChange={e => {\n  //               setWordСount(e.target.value);\n  //               console.log('wordСount', wordСount);\n  //             }}\n  //           />\n  //           <Input\n  //             value={__min}\n  //             onChange={async (e) => {\n  //               const t = new Date(e.target.value).valueOf();\n  //               const { data: founded } = await deep.select({\n  //                 type_id: Min, from_id: link.id, to_id: link.id\n  //               });\n  //               if (founded.length) deep.update({ link_id: founded[0]?.id }, { value: t }, { table: 'numbers' });\n  //               else deep.insert({ type_id: Min, from_id: link.id, to_id: link.id, number: { data: { value: t } } });\n  //             }}\n  //             placeholder=\"min\"\n  //             size=\"md\"\n  //             type=\"datetime-local\"\n  //             placeholder='Дата с'\n  //           />\n  //           <Input\n  //             value={__max}\n  //             onChange={async (e) => {\n  //               const t = new Date(e.target.value).valueOf();\n  //               const { data: founded } = await deep.select({\n  //                 type_id: Max, from_id: link.id, to_id: link.id\n  //               });\n  //               if (founded.length) deep.update({ link_id: founded[0]?.id }, { value: t }, { table: 'numbers' });\n  //               else deep.insert({ type_id: Max, from_id: link.id, to_id: link.id, number: { data: { value: t } } });\n  //             }}\n  //             placeholder=\"max\"\n  //             size=\"md\"\n  //             type=\"datetime-local\"\n  //             placeholder='Дата по'\n  //           />\n  //           <Select placeholder='Источник'>\n  //             <option value='option1'>Option 1</option>\n  //             <option value='option2'>Option 2</option>\n  //             <option value='option3'>Option 3</option>\n  //           </Select>\n  //           <Input \n  //             placeholder='Слово'\n  //             value={wordValue}\n  //             type='text'\n  //             onChange={e => setWordValue(e.target.value)}\n  //           />\n  //         </Box>\n\n  //         <ResponsiveContainer \n  //           width=\"100%\" height={300}\n  //         >\n  //           <BarChart\n  //             layout=\"vertical\"\n  //             data={datasorting}\n  //             margin={{\n  //               top: 5,\n  //               right: 10,\n  //               left: 72,\n  //               bottom: 15\n  //             }}\n  //             barSize={10}\n  //           >\n  //             <CartesianGrid\n  //               strokeDasharray=\"0\"\n  //               stroke=\"#f5f5f5\"\n  //               verticalCoordinatesGenerator={(props) => (props.width > 550) ? [150, 300, 450] : [200, 350]}\n  //               horizontal={false}\n  //             />\n  //             <XAxis tickLine={false} tick={true} type=\"number\" domain={[0, 'dataMax + 10']} />\n  //             <YAxis dataKey=\"text\" type=\"category\" />\n  //             <YAxis\n  //               orientation=\"right\"\n  //               yAxisId={1}\n  //               dataKey=\"value\"\n  //               type=\"category\"\n  //               domain={[\"dataMax\", \"dataMix\"]}\n  //               tickLine={false}\n  //             />\n  //             <Tooltip />\n  //             <Bar dataKey=\"value\" fill=\"#8884d8\" />\n  //           </BarChart>\n  //         </ResponsiveContainer>\n  //       </Box>\n  //     </ResizeDetector>\n  //   </>;\n    return <div>4</div>;\n  }, (prev, next) => _.isEqual(prev.link.value, next.link.value));\n  return ({ style, link }) => {\n    // return <div>3</div>;\n    return <Content link={link} style={{ width: 500, height: 500, ...style }}/>;\n  };\n}"
+      }
+    },
+    {
+      "id": "CloudMinMaxSyncHandler",
+      "type": 9,
+      "value": {
+        "value": "({ deep, data: { oldLink, newLink }, require }) => {\n  // on change formula recalculate result\n  const Contain = Number(deep.id('@deep-foundation/core', 'Contain'));\n  const Address = Number(deep.id('@deep-foundation/rss-to-deep', 'Address'));\n  const Data = Number(deep.id('@deep-foundation/rss-to-deep', 'Date'));\n  const Count = Number(deep.id('@deep-foundation/splitting-text-into-words-alt', 'Count'));\n  const Post = Number(deep.id('@deep-foundation/rss-to-deep', 'Post'));\n  const CloudAddress = Number(deep.id('@deep-foundation/words-experiment', 'CloudAddress'));\n  const Min = Number(deep.id('@deep-foundation/words-experiment', 'Min'));\n  const Max = Number(deep.id('@deep-foundation/words-experiment', 'Max'));\n  const { data: [cloud] } = deep.select({ id: newLink.from_id });\n  const cloudValue = cloud?.value?.value || {};\n  // throw new Error(JSON.stringify({ link_id: newLink.from_id, value: { ...cloudValue, test: newLink?.value?.value }, table: 'numbers' }));\n  const { data: ca } = deep.select({ type_id: CloudAddress, from_id: Number(newLink.from_id) });\n  const hash = {};\n  for (let a of ca) {\n    const { data: mins } = deep.select({ type_id: Min, from_id: Number(a.from_id) });\n    const { data: maxs } = deep.select({ type_id: Max, from_id: Number(a.from_id) });\n    const { data: posts } = deep.select({ type_id: Post, from_id: Number(a.to_id) });\n    for (let p of posts) {\n      const { data: dates } = deep.select({ type_id: Data, from_id: Number(p.id) });\n      const min = mins[0]?.value?.value;\n      const max = maxs[0]?.value?.value;\n      const date = dates[0]?.value?.value;\n      if (!(mins[0] && maxs[0] && dates[0]) || !(min <= date && max >= date)) continue;\n      const { data: counts } = deep.select({ type_id: Count, from_id: Number(p.id) });\n      for (let c of counts) {\n        hash[Number(c.to_id)] = hash[Number(c.to_id)] || { word: (deep.select({ id: Number(c.to_id) })?.data?.[0]?.value?.value || ''), total: 0, addresses: {} };\n        hash[Number(c.to_id)].total += c.value?.value || 0;\n        hash[Number(c.to_id)].addresses[Number(a.to_id)] = (hash[Number(c.to_id)].addresses?.[Number(a.to_id)] || 0) + (c.value?.value || 0);\n      }\n    }\n  }\n  deep.update({ link_id: Number(newLink.from_id) }, { value: hash }, { table: 'objects' });\n}"
+      }
+    },
+    {
+      "id": "CloudSelectorSyncHandler",
+      "type": 9,
+      "value": {
+        "value": "({ deep, data: { oldLink, newLink }, require }) => {\n  const Count = Number(deep.id('@deep-foundation/splitting-text-into-words-alt', 'Count'));\n\n  const link = newLink || oldLink;\n  if (Number(link.type_id) !== Count || !link?.value?.value) return;\n\n  const Cloud = Number(deep.id('@deep-foundation/words-experiment', 'Cloud'));\n  const CloudAddress = Number(deep.id('@deep-foundation/words-experiment', 'CloudAddress'));\n  const Word = Number(deep.id('@deep-foundation/splitting-text-into-words-alt', 'Word'));\n  const clouds = plv8.execute(`SELECT id FROM links WHERE type_id=$1`, [Cloud]).map(n => Number(n.id));\n  // const { data: clouds } = deep.select({ type_id: Cloud });\n  for (let c of clouds) {\n    const hash = {};\n    const { data: ca } = deep.select({ type_id: CloudAddress, from_id: Number(c) });\n    const { data: wCounts } = deep.select({ type_id: Count, to_id: Number(link.to_id) });\n    for (let wc of wCounts) {\n      const { data: [post] } = deep.select({ id: Number(wc.from_id) });\n      const a = ca.find(ca => Number(post?.to_id) === Number(ca.to_id));\n      // throw new Error(JSON.stringify({ a: Number(a?.id), post: Number(post?.id), ca: ca.map(a => Number(a.id)) }), null, 2);\n      if (a) {\n        let wordHash = deep.unsafe.plv8.execute(`SELECT (value->'${Number(wc.to_id)}') as jsonb FROM objects WHERE link_id=${Number(c)}`)?.[0]?.jsonb;\n        // throw new Error(JSON.stringify(wordHash, null, 2));\n        wordHash = wordHash || { word: (deep.select({ id: Number(wc.to_id) })?.data?.[0]?.value?.value || ''), total: 0, addresses: {} };\n        wordHash.total += wc.value?.value || 0;\n        wordHash.addresses[Number(a.to_id)] = (wordHash.addresses?.[Number(a.to_id)] || 0) + (wc.value?.value || 0);\n        deep.unsafe.plv8.execute(`update objects set value = jsonb_set(value, '{${Number(wc.to_id)}}', '${JSON.stringify(wordHash)}') where link_id=${Number(c)}`)?.[0]?.jsonb;\n      }\n    }\n    // if (Object.keys(hash).length) {\n      // deep.update({ link_id: Number(c) }, { value: { ...(c.value.value || {}), ...hash } }, { table: 'objects' });\n    // }\n  }\n}"
+      }
+    },
+    {
+      "id": "CloudClientHandler",
+      "type": 1,
+      "value": {
+        "value": "async ({ deep, require }) => {\n  const React = require('react');\n  const { useRef, useEffect, useState, useCallback } = React;\n  const { Input, SimpleGrid, Box } = require('@chakra-ui/react');\n  const WordCloud = require('react-d3-cloud');\n  const { useLocalStore } = require('@deep-foundation/store/local');\n  const ResizeDetector = require('react-resize-detector');\n  const _ = require('lodash');\n  const { useSpaceId } = require('@deep-foundation/deepcase');\n  const Min = await deep.id('@deep-foundation/words-experiment', 'Min');\n  const Max = await deep.id('@deep-foundation/words-experiment', 'Max');\n  const Word = await deep.id('@deep-foundation/splitting-text-into-words-alt', 'Word');\n  const Count = await deep.id('@deep-foundation/splitting-text-into-words-alt', 'Count');\n  const Address = await deep.id('@deep-foundation/rss-to-deep', 'Address');\n  const Contain = await deep.id('@deep-foundation/core', 'Contain');\n  const rssTree = await deep.id('@deep-foundation/rss-to-deep', 'rssTree');\n\n  const Content = React.memo(({ style, link }) => {\n    const [selectedWords, setSelectedWords] = useLocalStore('wcsw', []);\n    const [selectedAddresses, setSelectedAddresses] = useLocalStore('wcsa', []);\n    // const [selectedWords, setSelectedWords] = useState([]);\n    const { data: [min] } = deep.useDeepSubscription({\n      type_id: Min, from_id: link.id,\n    });\n    const { data: [max] } = deep.useDeepSubscription({\n      type_id: Max, from_id: link.id,\n    });\n    const { data: addresses } = deep.useDeepSubscription({\n      type_id: Address,\n      in: {\n        type_id: Contain,\n        from: {\n          out: {\n            type_id: Contain,\n            to_id: link.id,\n          },\n        },\n      },\n    });\n    // const whereAddresses = selectedAddresses?.length ? {\n    //   from: { up: { tree_id: rssTree, parent_id: { _in: selectedAddresses } } },\n    // } : {};\n    // const { data: results } = deep.useDeepSubscription({\n    //   _or: [\n    //     {\n    //       type_id: Word,\n    //       in: {\n    //         type_id: Count,\n    //         number: { value: { _gte: 2 } },\n    //         ...whereAddresses,\n    //       },\n    //     },\n    //     {\n    //       type_id: Count,\n    //       number: { value: { _gte: 2 } },\n    //       ...whereAddresses,\n    //     },\n    //   ]\n    // });\n    // console.log(whereAddresses);\n    // const words = deep.useMinilinksSubscription({\n    //   type_id: Word,\n    // });\n    const data = React.useMemo(() => {\n      const wordIds = Object.keys((link?.value?.value || {}));\n      return wordIds.map(wid => ({\n        id: wid,\n        text: link?.value?.value[wid]?.word,\n        value: link?.value?.value[wid]?.total * 80,\n      }));\n    }, [link]);\n    const onWordClick = useCallback((e, w) => setSelectedWords((selectedWords = []) => selectedWords.includes(w.id) ? selectedWords.filter(i => i ! === w.id) : [...selectedWords, w.id]), []);\n    const wordFontWeight = useCallback((w) => selectedWords.includes(w.id) ? 'bold' : 'normal', [selectedWords]);\n    const wordFill = useCallback((w) => selectedWords.includes(w.id) ? '#fff' : '#b6b6b6', [selectedWords]);\n    const wordRotate = useCallback((word) => word.value % 1, []);\n    console.log({ selectedWords, data });\n    const [size, setSize] = useState({ width: 0, height: 0 })\n\n    const _min = new Date(min?.value?.value || (new Date()).valueOf());\n    const _max = new Date(max?.value?.value || (new Date()).valueOf());\n    const __min = (new Date(_min.getTime() - _min.getTimezoneOffset() * 60000).toISOString()).slice(0, -1)\n    const __max = (new Date(_max.getTime() - _max.getTimezoneOffset() * 60000).toISOString()).slice(0, -1)\n\n    return <>\n      <ResizeDetector\n        handleWidth handleHeight\n        onResize={(width, height) => setSize({ width, height })}\n      >\n        <div style={{ ...style, position: 'relative', }}>\n          <SimpleGrid columns={2} spacing={10} position=\"absolute\" top={0} left={0} width=\"100%\">\n            <Box>\n              <Input\n                value={__min}\n                onChange={async (e) => {\n                  const t = new Date(e.target.value).valueOf();\n                  const { data: founded } = await deep.select({\n                    type_id: Min, from_id: link.id, to_id: link.id\n                  });\n                  if (founded.length) deep.update({ link_id: founded[0]?.id }, { value: t }, { table: 'numbers' });\n                  else deep.insert({ type_id: Min, from_id: link.id, to_id: link.id, number: { data: { value: t } } });\n                }}\n                placeholder=\"min\"\n                size=\"md\"\n                type=\"datetime-local\"\n              />\n            </Box>\n            <Box>\n              <Input\n                value={__max}\n                onChange={async (e) => {\n                  const t = new Date(e.target.value).valueOf();\n                  const { data: founded } = await deep.select({\n                    type_id: Max, from_id: link.id, to_id: link.id\n                  });\n                  if (founded.length) deep.update({ link_id: founded[0]?.id }, { value: t }, { table: 'numbers' });\n                  else deep.insert({ type_id: Max, from_id: link.id, to_id: link.id, number: { data: { value: t } } });\n                }}\n                placeholder=\"max\"\n                size=\"md\"\n                type=\"datetime-local\"\n              />\n            </Box>\n          </SimpleGrid>\n          {<WordCloud\n            data={data}\n            width={size.width}\n            height={size.height}\n            fontWeight={wordFontWeight}\n            fill={wordFill}\n            rotate={wordRotate}\n            onWordClick={onWordClick}\n          />}\n          <Box position=\"absolute\" bottom={0} left={0} width=\"100%\">\n            <div>{addresses.map(a => <div style={{ color: selectedAddresses.includes(a.id) ? '#fff' : '#b6b6b6' }} onClick={() => setSelectedAddresses((sa = []) => sa.includes(a.id) ? sa.filter(s => s !== a.id) : [...sa, a.id])}>{a?.id} {a?.value?.value || ''}</div>)}</div>\n            <div>{selectedWords.map(w => <><span onClick={() => setSelectedWords(selectedWords.filter(i => i != w))}>{w}</span>, </>)}</div>\n            <div>\n              {selectedWords.map(wid => {\n                const w = deep.minilinks.byId[wid];\n                const cs = w?.inByType[Count] || [];\n                return <div>\n                  <div>{wid} {w?.value?.value}</div>\n                  <div style={{ paddingLeft: 16 }}>\n                    {cs.map(c => <div>\n                      {c?.value?.value} {c?.from_id} {(c?.from?.value?.value || '').slice(0, 30)}...\n                    </div>)}\n                  </div>\n                </div>;\n              })}\n            </div>\n          </Box>\n        </div>\n      </ResizeDetector>\n    </>;\n  }, (prev, next) => _.isEqual(prev.link.value, next.link.value));\n  return ({ style, link }) => {\n    return <Content link={link} style={{ width: 500, height: 500, ...style }}/>;\n  };\n}"
+      }
+    },
+    {
+      "id": "WordsHandler",
+      "type": 7,
+      "from": 8,
+      "to": "CloudClientHandler"
+    },
+    {
+      "id": "Cloud",
+      "type": 12
+    },
+    {
+      "id": "CloudAddress",
+      "type": 12,
+      "from": "Cloud",
+      "to": 6
+    },
+    {
+      "id": "CoudHandleClient",
+      "type": 13,
+      "from": "Cloud",
+      "to": "WordsHandler"
+    },
+    {
+      "id": "Max",
+      "type": 12,
+      "from": "Cloud",
+      "to": "Cloud"
+    },
+    {
+      "id": "Min",
+      "type": 12,
+      "from": "Cloud",
+      "to": "Cloud"
+    }
+  ],
+  "errors": [],
+  "dependencies": [
+    {
+      "name": "@deep-foundation/tsx",
+      "version": "0.0.4"
+    },
+    {
+      "name": "@deep-foundation/core",
+      "version": "0.0.2"
+    },
+    {
+      "name": "@deep-foundation/rss-to-deep",
+      "version": "0.0.19"
+    },
+    {
+      "name": "@deep-foundation/splitting-text-into-words-alt",
+      "version": "0.0.11"
+    }
+  ]
+}
